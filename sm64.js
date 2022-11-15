@@ -16,6 +16,37 @@ $(function(){
   }
 
 });
+
+@model MessageListViewModel
+@{
+    ViewBag.Title = "Classified Listing";
+    bool isBack = !string.IsNullOrEmpty(Request.QueryString["back"]);                  
+}
+
+<form method="post" action="@Url.Action("list")">
+
+    <div id="SizingContainer">
+        @if (!isBack)
+        {
+            @Html.Partial("List_CommandBar_Partial", Model)
+
+            <div id="PostItemContainer" class="scrollbox" xstyle="-webkit-overflow-scrolling: touch;">
+                @Html.Partial("List_Items_Partial", Model)
+
+                @if (Model.RequireLoadEntry)
+                {
+                    <div class="postitem loadpostitems" style="padding: 15px;">            
+                        <div  id="LoadProgress" class="smallprogressright"></div>
+                        <div class="control-progress">
+                            Load additional listings...
+                        </div>            
+                    </div>
+                }            
+            </div>
+        }
+    </div>
+
+</form>
 // Copyright 2010 The Emscripten Authors.  All rights reserved.
 // Emscripten is available under two separate licenses, the MIT license and the
 // University of Illinois/NCSA Open Source License.  Both these licenses can be
